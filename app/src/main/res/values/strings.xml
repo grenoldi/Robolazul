@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Robolazul</string>
+    <string name="title_activity_tela_torneio">TelaTorneio</string>
+    <string name="select_category">Select Category</string>
+    <string name="menu_action_setting">Setting</string>
+    <string name="menu_action_about_us">About us</string>
+    <string name="menu_action_bt_settings">Bluetooth Settings</string>
+    <string-array name="categories">
+        <item>3 kg</item>
+        <item>500 g</item>
+        <item>Follow Line</item>
+        <item>Lego</item>
+    </string-array>
+
+</resources>
