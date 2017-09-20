@@ -5,6 +5,16 @@
     <string name="menu_action_setting">Setting</string>
     <string name="menu_action_about_us">About us</string>
     <string name="menu_action_bt_settings">Bluetooth Settings</string>
+    <string name="BluetoothState">bluetoothOnOff</string>
+    <string name="add_strategy">Add Strategy</string>
+    <string name="strategy_name">Strategy Name</string>
+    <string name="character_sent">Character Sent</string>
+    <string name="type_in_strategy_name">Type in Strategy name</string>
+
+    <string name="new_strategy_name">Type new desired strategy name</string>
+    <string name="strategy_to_delete">Type strategy id to delete</string>
+    <string name="type_in_new_strategy_name">Type in new strategy name</string>
+    <string name="type_in_new_character_to_send">Type in new character to send</string>
     <string-array name="categories">
         <item>3 kg</item>
         <item>500 g</item>
