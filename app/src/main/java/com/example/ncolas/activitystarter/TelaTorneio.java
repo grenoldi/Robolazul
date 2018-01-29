@@ -31,7 +31,7 @@ import android.widget.Toast;
 
 //TODO: Discovered a bug: when I try to comeback from "TelaTorneio" to "MainActivity", app crashes. Figure out why.
 
-public class TelaTorneio extends AppCompatActivity
+public class    TelaTorneio extends AppCompatActivity
 {
     String selected_robot;
     //TODO: search the adequate modifier for each class attribute
@@ -90,8 +90,6 @@ public class TelaTorneio extends AppCompatActivity
             {
                 //Toast.makeText(parent.getContext(), parent.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
                 //TODO: search about the method getChildAt()
-                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-                ((TextView) parent.getChildAt(0)).setTextSize(20);
 
                 String chosen_category = parent.getItemAtPosition(i).toString();
                 switch(chosen_category)

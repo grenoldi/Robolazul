@@ -204,12 +204,12 @@ public class MainActivity extends AppCompatActivity
             Log.d(TAG, "enableBT: Does not have BT capability");
         }
 
-        /*else if(bt_adapter.isEnabled())
+        else if(bt_adapter.isEnabled())
         {
             Toast.makeText(MainActivity.this,"Bluetooth is already on!", Toast.LENGTH_SHORT).show();
-        }*/
+        }
 
-        else if(!bt_adapter.isEnabled())
+        else
         {
             Log.d(TAG, "enableBT: enabling bluetooth");
             Intent intent_enableBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);

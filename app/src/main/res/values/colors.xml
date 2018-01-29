@@ -4,7 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="team_color">#18264e</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#d3d3d3</color>
+    <color name="white">#FFFFFF</color>
     <color name="light_blue">#2f47cf</color>
     <color name="red">#FF0000</color>
     <color name="light_green">#60bc50</color>
