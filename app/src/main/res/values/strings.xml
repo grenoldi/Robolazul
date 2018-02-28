@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Robolazul</string>
     <string name="title_activity_tela_torneio">TelaTorneio</string>
     <string name="select_category">Select Category</string>
@@ -10,11 +11,15 @@
     <string name="strategy_name">Strategy Name</string>
     <string name="character_sent">Character Sent</string>
     <string name="type_in_strategy_name">Type in Strategy name</string>
-
+    <string name="type_in_robot_name">Type in Robot name</string>
     <string name="new_strategy_name">Type new desired strategy name</string>
-    <string name="strategy_to_delete">Type strategy id to delete</string>
-    <string name="type_in_new_strategy_name">Type in new strategy name</string>
+    <string name="strategy_to_delete">Type strategy name to delete</string>
+    <string name="robot_to_delete">Type in Robot name to delete</string>
     <string name="type_in_new_character_to_send">Type in new character to send</string>
+    <string name="type_in_new_category">Type in new category</string>
+    <string name="type_in_robot_category">Type in Robot category</string>
+    <string name="discover_bt_devices">Discover</string>
+    <string name="paired_bt_devices">Show Paired Bluetooth Devices</string>
     <string-array name="categories">
         <item>3 kg</item>
         <item>500 g</item>
