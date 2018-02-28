@@ -8,19 +8,10 @@
     >
 
     <EditText
-        android:id="@+id/strategy_id"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="Strategy ID"
-        android:imeOptions="actionDone"
-        android:inputType="textNoSuggestions"
-        />
-
-    <EditText
         android:id="@+id/new_strategy_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:hint="@string/type_in_new_strategy_name"
+        android:hint="@string/type_in_strategy_name"
         android:imeOptions="actionDone"
         android:inputType="textNoSuggestions"
         />

@@ -4,7 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ncolas.activitystarter.TelaBluetooth">
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    tools:context="com.example.ncolas.activitystarter.TelaBluetooth"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    >
 
+
+    <Button
+        android:id="@+id/pairedBTDevices"
+        android:layout_marginTop="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/paired_bt_devices"
+        />
+    <Button
+        android:id="@+id/scanBTDevices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Scan for Bluetooth devices"
+        android:onClick="scanForBluetoothDevices"
+        />
+    <ListView
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/found_devices"
+        >
+    </ListView>
 
 </LinearLayout>

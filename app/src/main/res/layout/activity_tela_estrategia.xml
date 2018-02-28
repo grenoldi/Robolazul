@@ -121,13 +121,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Refresh"
+            android:text="REFRESH"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="105dp"
             android:layout_marginBottom="20dp"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/colorPrimary"
+            android:textSize="18sp"
+            style="@style/RbButton.Inverse.Blue"
             android:onClick= "listStrategies"
             />
 

@@ -25,6 +25,7 @@
         android:id="@+id/nome_app"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_alignParentTop="true"
         android:layout_weight="1"
         android:text="Select Mode"
         android:layout_marginTop="40dp"
@@ -40,9 +41,8 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:layout_weight="1"
         android:onClick="doChooseMode"
-        android:text="Tournament"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:textColor="@color/white"
+        android:text="TOURNAMENT"
+        style="@style/RbButton.Inverse.Blue"
         android:textSize="20sp"/>
 
     <Button
@@ -55,8 +55,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:layout_weight="1"
         android:onClick="doChooseMode"
-        android:text="Debugging"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:textColor="@color/white"
+        android:text="DEBUGGING"
+        style="@style/RbButton.Inverse.Blue"
         android:textSize="20sp"/>
 </LinearLayout>

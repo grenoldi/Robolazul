@@ -4,23 +4,22 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="15dp"
-    android:gravity="center_vertical"
-    >
+    android:gravity="center_vertical">
 
     <EditText
-        android:id="@+id/strategy_name"
+        android:id="@+id/robot_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:hint="@string/strategy_name"
+        android:hint="@string/type_in_robot_name"
         android:imeOptions="actionDone"
         android:inputType="textNoSuggestions"
         />
     <EditText
-        android:id="@+id/character"
+        android:id="@+id/robot_category"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:imeOptions="actionDone"
-        android:hint="@string/character_sent"
+        android:hint="@string/type_in_robot_category"
         android:inputType="textNoSuggestions"
         />
 
