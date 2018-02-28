@@ -12,9 +12,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_feg_robotica"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_feg_robotica"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
@@ -30,7 +30,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".TelaTestes" />
         <activity android:name=".TelaBluetooth" />
-        <activity android:name=".TelaEstrategia"></activity>
+        <activity android:name=".TelaEstrategia" />
+        <activity android:name=".ListaDispositivos"></activity>
     </application>
 
 </manifest>
