@@ -3,11 +3,8 @@ package com.example.ncolas.activitystarter;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import static java.nio.channels.Pipe.open;
 
 /**
  * Created by Nícolas on 10/09/2017.
@@ -71,17 +68,17 @@ public class CriaBanco extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        int i = db.delete(TABLE_NAME,"ID=?", new String[] {id});
+        int i = db.delete(TABLE_NAME,"STRATEGY_NAME=?", new String[] {id});
         return i;
     }
 
-    public boolean updateData(String id, String strategyName, String character)
+    public boolean updateData(String strategyName, String character)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2,strategyName);
         contentValues.put(COL_3,character);
-        int result = db.update(TABLE_NAME, contentValues, "ID=?", new String[] {id});
+        int result = db.update(TABLE_NAME, contentValues, "STRATEGY_NAME=?", new String[] {strategyName});
         if(result >0)
         {
             return true;

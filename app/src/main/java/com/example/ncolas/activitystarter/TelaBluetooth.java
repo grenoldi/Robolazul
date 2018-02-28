@@ -6,14 +6,25 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 
-import static android.R.attr.action;
+import java.util.ArrayList;
+
+import static android.bluetooth.BluetoothDevice.ACTION_FOUND;
 
 
 public class TelaBluetooth extends AppCompatActivity {
+
+    private ListView found_BT_devices;
+    private ArrayList<String> mDeviceList;
+    private Button btn_scanBTdevices;
+
 
     //TODO: this activity doesn't work at all... Figure out why.
     @Override
@@ -22,52 +33,43 @@ public class TelaBluetooth extends AppCompatActivity {
         setContentView(R.layout.activity_tela_bluetooth);
 
         BluetoothAdapter bt_adapter = BluetoothAdapter.getDefaultAdapter();
-        IntentFilter filter = new IntentFilter();
 
-        filter.addAction(BluetoothDevice.ACTION_FOUND);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-
-        registerReceiver(br_discovery, filter);
-        if(bt_adapter.isDiscovering())
-        {
-            bt_adapter.cancelDiscovery();
-        }
+        found_BT_devices = (ListView) findViewById(R.id.found_devices);
         bt_adapter.startDiscovery();
 
+        btn_scanBTdevices = (Button) findViewById(R.id.scanBTDevices);
+
+        IntentFilter filter = new IntentFilter(ACTION_FOUND);
+        registerReceiver(bt_broadcastReceiver, filter);
     }
-
-    private final BroadcastReceiver br_discovery = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction(); //TODO: What is this string ?
-
-
-            if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action))
-            {
-                //discovery starts, we can show progress dialog or perform other tasks
-            }
-
-            else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action))
-            {
-                //discovery finishes, dismiss progress dialog
-            }
-
-            else if (BluetoothDevice.ACTION_FOUND.equals(action))
-            {
-                //bluetooth device found
-                BluetoothDevice device =  intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                String device_list = device.getName() + " - " + device.getAddress();
-                Toast.makeText(context, device_list,Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
 
     @Override
     public void onDestroy()
     {
         //CAUTION: ALWAYS REMEMBER TO UNREGISTER BROADCAST RECEIVER at onDestroy() method
-        unregisterReceiver(br_discovery);
+        unregisterReceiver(bt_broadcastReceiver);
         super.onDestroy();
     }
+
+    private final BroadcastReceiver bt_broadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                BluetoothDevice device = intent
+                        .getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                mDeviceList.add(device.getName() + "\n" + device.getAddress());
+                Log.i("BT", device.getName() + "\n" + device.getAddress());
+                found_BT_devices.setAdapter(new ArrayAdapter<String>(context,
+                        android.R.layout.simple_list_item_1, mDeviceList));
+            }
+        }
+    };
+
+    public void scanForBluetoothDevices(View view)
+    {
+        Intent i = new Intent(this, ListaDispositivos.class);
+        startActivity(i);
+    }
+
+
 }

@@ -1,37 +1,35 @@
 package com.example.ncolas.activitystarter;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
+/*-------------------------Last update on this activity: 28/02/18 by Nick-------------------------*/
+
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
-
-import static android.R.attr.id;
-import static android.view.View.GONE;
-import static com.example.ncolas.activitystarter.R.id.parent;
-import static com.example.ncolas.activitystarter.R.id.visible;
-import static com.example.ncolas.activitystarter.R.styleable.View;
-import android.view.View;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
+
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+
+import static android.view.View.GONE;
+import static com.example.ncolas.activitystarter.R.id.robot_name;
 
 
-//TODO: Discovered a bug: when I try to comeback from "TelaTorneio" to "MainActivity", app crashes. Figure out why.
+//TODO: Discovered a bug: when I try to comeback from "TelaTorneio" to "MainActivity", app crashes. Figure out why. (FIXED, don't know how...)
 
-public class    TelaTorneio extends AppCompatActivity
+public class TelaTorneio extends AppCompatActivity
 {
     String selected_robot;
     //TODO: search the adequate modifier for each class attribute
@@ -45,11 +43,25 @@ public class    TelaTorneio extends AppCompatActivity
     ImageButton imgbtn_tonto;
     ImageButton imgbtn_lego;
 
+    View update_robot_layout;
+    View add_robot_layout;
+    View delete_robot_layout;
+
+    EditText et_robot_name;
+    EditText et_robot_category;
+
     //TextView for robot name
     TextView tv_robot_name;
 
     //TODO: change the button below's name, not used for this purpose anymore
     Button btn_ok;
+
+    //Floating Action Menu to hold floating action buttons to perform changes into the robot's database
+    FloatingActionMenu fab_menu_robot_settings;
+    FloatingActionButton fab_button_robot_add;
+    FloatingActionButton fab_button_robot_update;
+    FloatingActionButton fab_button_robot_delete;
+
 
 
     @Override
@@ -73,10 +85,171 @@ public class    TelaTorneio extends AppCompatActivity
         btn_ok = (Button) findViewById(R.id.goStrategy);
 
         //Creating TextView to display robot name
-        tv_robot_name = (TextView) findViewById(R.id.robot_name);
+        tv_robot_name = (TextView) findViewById(robot_name);
 
         //Creating spinner element and array adapter
         sp_category = (Spinner) findViewById(R.id.sp_category);
+
+        //Creating Object of the FAB and FAB Menu classes and link to respectives XML ID's
+
+        fab_menu_robot_settings = (FloatingActionMenu) findViewById(R.id.fab_menu_robot_settings);
+        fab_button_robot_add = (FloatingActionButton) findViewById(R.id.item_add_robot);
+        fab_button_robot_update = (FloatingActionButton) findViewById(R.id.item_update_robot);
+        fab_button_robot_delete = (FloatingActionButton) findViewById(R.id.item_delete_robot);
+
+        fab_button_robot_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = getLayoutInflater(); //inflates dialog box for adding strategy
+                add_robot_layout = inflater.inflate(R.layout.robot_add, null);
+                et_robot_name = (EditText) add_robot_layout.findViewById(R.id.robot_name);
+                et_robot_category = (EditText) add_robot_layout.findViewById(R.id.robot_category);
+
+                //Setting up dialog box
+                AlertDialog.Builder alert = new AlertDialog.Builder(TelaTorneio.this);
+                alert.setTitle("Add Robot");
+                // this is set the view from XML inside AlertDialog
+                alert.setView(add_robot_layout);
+                // disallow cancel of AlertDialog on click of back button and outside touch
+                alert.setCancelable(false);
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(getBaseContext(), "Cancel clicked", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                alert.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        /*
+                        TODO: Code below will depend on the robot database, that has not been created yet.
+                        String name = et_strategy_name.getText().toString();
+                        String character = et_character.getText().toString();
+
+                        Boolean result = db_my_strategies.insertData(name,character);
+                        if (result)
+                        {
+                            Toast.makeText(TelaTorneio.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        }
+
+                        else
+                        {
+                            Toast.makeText(TelaTorneio.this, "Data Insertion Failed", Toast.LENGTH_SHORT).show();
+                        }
+                        */
+                        Toast.makeText(TelaTorneio.this, "Build robot database to use the 'add robot' functionality :)", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                AlertDialog dialog = alert.create();
+                dialog.show();
+            }
+        });
+
+        fab_button_robot_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = getLayoutInflater(); //inflates dialog box for updating strategy
+                update_robot_layout = inflater.inflate(R.layout.robot_update, null);
+                et_robot_name = (EditText) update_robot_layout.findViewById(robot_name); //same ID in two different XML files, watch out
+                et_robot_category = (EditText) update_robot_layout.findViewById(R.id.new_category);
+
+                AlertDialog.Builder update_dialog = new AlertDialog.Builder(TelaTorneio.this);
+                update_dialog.setTitle("Edit Robot");
+
+                //final EditText new_strategy_name = new EditText(TelaEstrategia.this);
+
+                update_dialog.setView(update_robot_layout);
+                update_dialog.setCancelable(false);
+
+                update_dialog.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        /*
+                        TODO: Code below will depend on the robot database, that has not been created yet.
+                        String id = et_strategy_id.getText().toString();
+                        String name = et_strategy_name.getText().toString();
+                        String character = et_character.getText().toString();
+
+                        Boolean result = db_my_strategies.updateData(name, character);
+                        if(result)
+                        {
+                            Toast.makeText(TelaTorneio.this, "Data Updated Successfully", Toast.LENGTH_SHORT).show();
+                        }
+
+                        else
+                        {
+                            Toast.makeText(TelaTorneio.this,"No Rows Affected", Toast.LENGTH_SHORT).show();
+                        }
+                        */
+                        Toast.makeText(TelaTorneio.this, "Build robot database to use the 'update robot' functionality :)", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                update_dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(getBaseContext(), "Cancel clicked", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                AlertDialog dialog = update_dialog.create();
+                dialog.show();
+            }
+        });
+
+        fab_button_robot_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = getLayoutInflater(); //inflates dialog box for adding strategy
+                delete_robot_layout = inflater.inflate(R.layout.robot_delete, null);
+
+                et_robot_name = (EditText) delete_robot_layout.findViewById(R.id.robot_name);
+
+                AlertDialog.Builder delete_dialog = new AlertDialog.Builder(TelaTorneio.this);
+                delete_dialog.setTitle("Delete Robot");
+
+                delete_dialog.setView(delete_robot_layout);
+                delete_dialog.setCancelable(false);
+
+                delete_dialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        /*
+                        TODO: Code below will depend on the robot database, that has not been created yet.
+                        String id = et_strategy_id.getText().toString();
+                        int result = db_my_strategies.deleteData(id);
+
+                        Toast.makeText(TelaEstrategia.this, result+" :Row(s) Deleted", Toast.LENGTH_SHORT).show();
+                        */
+                        Toast.makeText(TelaTorneio.this, "Build robot database to use the 'delete robot' functionality :)", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                delete_dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(getBaseContext(), "Cancel clicked", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                AlertDialog dialog = delete_dialog.create();
+                dialog.show();
+
+
+            }
+        });
+
+
 
         dataAdapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
 
@@ -90,6 +263,8 @@ public class    TelaTorneio extends AppCompatActivity
             {
                 //Toast.makeText(parent.getContext(), parent.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
                 //TODO: search about the method getChildAt()
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+                ((TextView) parent.getChildAt(0)).setTextSize(20);
 
                 String chosen_category = parent.getItemAtPosition(i).toString();
                 switch(chosen_category)
@@ -148,11 +323,7 @@ public class    TelaTorneio extends AppCompatActivity
             }
 
         });
-
-
     }
-
-
 
     public void showRobotName(View view)
     {
@@ -192,7 +363,9 @@ public class    TelaTorneio extends AppCompatActivity
         Bundle bd = new Bundle();
         bd.putString("RobotName",tv_robot_name.getText().toString());
         tela_estrategia.putExtras(bd);
-        startActivity(tela_estrategia);
+        startActivity(tela_estrategia); //IF doesn't work, put this uncomment this line and erase below
+
+
     }
 
 }

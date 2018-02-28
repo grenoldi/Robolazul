@@ -1,15 +1,10 @@
 package com.example.ncolas.activitystarter;
 import android.content.DialogInterface;
 import android.content.Intent;
-import com.github.clans.fab.FloatingActionButton;
-
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteException;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-
-import java.util.ArrayList;
 
 import static com.example.ncolas.activitystarter.R.id.strategy_name;
 
@@ -103,13 +97,12 @@ public class TelaEstrategia extends AppCompatActivity {
                 dialog.show();
             }
         });
+
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Toast.makeText(TelaEstrategia.this, "You Clicked edit button", Toast.LENGTH_SHORT).show();
                 LayoutInflater inflater = getLayoutInflater(); //inflates dialog box for updating strategy
                 update_layout = inflater.inflate(R.layout.strategy_update, null);
-
-                et_strategy_id = (EditText) update_layout.findViewById(R.id.strategy_id);
                 et_strategy_name = (EditText) update_layout.findViewById(R.id.new_strategy_name);
                 et_character = (EditText) update_layout.findViewById(R.id.new_character);
 
@@ -131,7 +124,7 @@ public class TelaEstrategia extends AppCompatActivity {
                         String name = et_strategy_name.getText().toString();
                         String character = et_character.getText().toString();
 
-                        Boolean result = db_my_strategies.updateData(id, name, character);
+                        Boolean result = db_my_strategies.updateData(name, character);
                         if(result)
                         {
                             Toast.makeText(TelaEstrategia.this, "Data Updated Successfully", Toast.LENGTH_SHORT).show();
@@ -230,7 +223,7 @@ public class TelaEstrategia extends AppCompatActivity {
         {
             while (res.moveToNext())
                 {
-                    stringBuffer.append("Id: "+res.getString(0)+"\n");
+                    //stringBuffer.append("Id: "+res.getString(0)+"\n");
                     stringBuffer.append("Strategy Name: "+res.getString(1)+"\n");
                     stringBuffer.append("Character Sent: "+res.getString(2)+"\n");
                 }
@@ -240,8 +233,6 @@ public class TelaEstrategia extends AppCompatActivity {
                 tv_strategy.setMovementMethod(new ScrollingMovementMethod());
                 Toast.makeText(this,"Data Retrieved Successfully",Toast.LENGTH_SHORT).show();
         }
-
-
 
         else
         {

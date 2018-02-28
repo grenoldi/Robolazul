@@ -3,11 +3,12 @@ package com.example.ncolas.activitystarter;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.app.Activity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -17,9 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import static android.R.attr.mode;
 
-//first bob change
 public class MainActivity extends AppCompatActivity
 {
     private final static String TAG = "MainActivity";
@@ -97,8 +96,9 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy()
     {
         Log.d(TAG, "onDestroy: called");
-        super.onDestroy();
         unregisterReceiver(bt_broadcastReceiver); //stops broadcast receiver when the app is closed
+        unregisterReceiver(broadRcvr_discoverable);
+        super.onDestroy();
     }
 
     @Override
@@ -202,14 +202,25 @@ public class MainActivity extends AppCompatActivity
         if(bt_adapter == null) //this case refers to a device that doesn't support bluetooth communication
         {
             Log.d(TAG, "enableBT: Does not have BT capability");
+            new AlertDialog.Builder(this)
+                    .setTitle("Error")
+                    .setMessage("Your device is not compatible")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            System.exit(0);
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         }
 
-        else if(bt_adapter.isEnabled())
+        /*else if(bt_adapter.isEnabled())
         {
             Toast.makeText(MainActivity.this,"Bluetooth is already on!", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
-        else
+        else if(!bt_adapter.isEnabled())
         {
             Log.d(TAG, "enableBT: enabling bluetooth");
             Intent intent_enableBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -226,6 +237,17 @@ public class MainActivity extends AppCompatActivity
         if(bt_adapter == null) //this case refers to a device that doesn't support bluetooth communication
         {
             Log.d(TAG, "enableBT: Does not have BT capability");
+            new AlertDialog.Builder(this)
+            .setTitle("Error")
+            .setMessage("Your device is not compatible")
+            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    System.exit(0);
+                }
+            })
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .show();
         }
 
         else if(bt_adapter.isEnabled())
@@ -245,7 +267,7 @@ public class MainActivity extends AppCompatActivity
     //Self-explained method title
     public void enableBT_discoverable()
     {
-        Log.d(TAG, "broadRcvr_discoverable: Making device discoverable for 300 seconds");
+        Log.d(TAG, "broadRcvr_discoverable: Making device discoverable for 120 seconds");
         Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
         //TODO: Amount of time the device is discoverable, in seconds. Find out which amount best fits.
         discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 120);
