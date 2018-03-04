@@ -49,6 +49,20 @@
         xmlns:fab="http://schemas.android.com/apk/res-auto"
         >
 
+        <Button
+            android:id="@+id/refresh_strategies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="REFRESH"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="105dp"
+            android:layout_marginBottom="20dp"
+            android:textSize="18sp"
+            style="@style/RbButton.Inverse.Blue"
+            android:onClick= "listStrategies"
+            />
+
         <com.github.clans.fab.FloatingActionMenu
             android:id="@+id/material_design_android_floating_action_menu"
             android:elevation="10dp"
@@ -116,19 +130,7 @@
                 fab:fab_size="mini" />
         </com.github.clans.fab.FloatingActionMenu>
 
-        <Button
-            android:id="@+id/refresh_strategies"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="REFRESH"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="105dp"
-            android:layout_marginBottom="20dp"
-            android:textSize="18sp"
-            style="@style/RbButton.Inverse.Blue"
-            android:onClick= "listStrategies"
-            />
+
 
     </RelativeLayout>
 

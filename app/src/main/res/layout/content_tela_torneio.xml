@@ -11,7 +11,6 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:weightSum="6"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.ncolas.activitystarter.TelaTorneio"
     tools:showIn="@layout/activity_tela_torneio">
@@ -20,7 +19,7 @@
         android:id="@+id/tv_choose_robot"
         android:layout_width="wrap_content"
         android:layout_height="34dp"
-        android:layout_weight="1.09"
+        android:layout_weight="4"
         android:layout_marginTop="20dp"
         android:text="Choose your Robot"
         android:layout_gravity="center_horizontal"
@@ -29,19 +28,19 @@
 
     <Spinner
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:id="@+id/sp_category"
         android:spinnerMode="dropdown"
         android:entries="@array/categories"
-        android:layout_marginTop="15dp"
+        android:layout_weight="1"
         android:backgroundTint="@color/white"
         />
 
     <LinearLayout
         android:id="@+id/robots"
         android:layout_width="match_parent"
-        android:layout_marginTop="80dp"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
         android:paddingTop="5dp"
         android:gravity="center">
 
@@ -132,8 +131,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="260dp"
+            android:layout_height="10dp"
             android:background="@color/team_color"
+            android:layout_weight="40"
             xmlns:fab="http://schemas.android.com/apk/res-auto"
             >
 
