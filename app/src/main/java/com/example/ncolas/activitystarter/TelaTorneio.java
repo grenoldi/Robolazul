@@ -4,6 +4,7 @@ package com.example.ncolas.activitystarter;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +25,13 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import static android.view.View.GONE;
+import static android.view.View.inflate;
+import static com.example.ncolas.activitystarter.R.id.robot_btn_list;
 import static com.example.ncolas.activitystarter.R.id.robot_name;
 
 
@@ -33,19 +41,18 @@ public class TelaTorneio extends AppCompatActivity
 {
     String selected_robot;
     //TODO: search the adequate modifier for each class attribute
+
+    DBRobots dbr;
+
     Spinner sp_category;
-    ArrayAdapter<CharSequence> dataAdapter;
-    ImageButton imgbtn_metalgarurumon;
-    ImageButton imgbtn_bernadete;
-    ImageButton imgbtn_lobo;
-    ImageButton imgbtn_sonic;
-    ImageButton imgbtn_sombra;
-    ImageButton imgbtn_tonto;
-    ImageButton imgbtn_lego;
+    ArrayAdapter<String> dataAdapter;
+    List<String> categoryList;
+    Cursor cursor;
 
     View update_robot_layout;
     View add_robot_layout;
     View delete_robot_layout;
+
 
     EditText et_robot_name;
     EditText et_robot_category;
@@ -62,6 +69,16 @@ public class TelaTorneio extends AppCompatActivity
     FloatingActionButton fab_button_robot_update;
     FloatingActionButton fab_button_robot_delete;
 
+    //TODO: finish robot buttons > LinearLayout btnRobotList =
+
+    //THESE HAVE TO GO
+    ImageButton imgbtn_metalgarurumon;
+    ImageButton imgbtn_bernadete;
+    ImageButton imgbtn_lobo;
+    ImageButton imgbtn_sonic;
+    ImageButton imgbtn_sombra;
+    ImageButton imgbtn_tonto;
+    ImageButton imgbtn_lego;
 
 
     @Override
@@ -69,8 +86,37 @@ public class TelaTorneio extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_torneio);
 
+        dbr = new DBRobots(this);
+        categoryList = new ArrayList<String>();
+        cursor = dbr.getAllCategories(dbr.getTABLE_NAME());
 
-        //Creating ImageButtons
+        //Creating  OK Button
+        btn_ok = (Button) findViewById(R.id.goStrategy);
+
+        //Creating TextView to display robot name
+        tv_robot_name = (TextView) findViewById(robot_name);
+
+        //Creating the spinner filled with all the robot categories from database
+        sp_category = (Spinner) findViewById(R.id.sp_category);
+        while(cursor.moveToNext()){
+            categoryList.add(cursor.getString(0));
+        }
+        cursor.close();
+
+        dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categoryList);
+
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        sp_category.setAdapter(dataAdapter);
+
+        //Creating Object of the FAB and FAB Menu classes and link to respectives XML ID's
+
+        fab_menu_robot_settings = (FloatingActionMenu) findViewById(R.id.fab_menu_robot_settings);
+        fab_button_robot_add = (FloatingActionButton) findViewById(R.id.item_add_robot);
+        fab_button_robot_update = (FloatingActionButton) findViewById(R.id.item_update_robot);
+        fab_button_robot_delete = (FloatingActionButton) findViewById(R.id.item_delete_robot);
+
+        //Creating ImageButtons(THESE TOO HAVE TO GO)
 
         imgbtn_bernadete = (ImageButton) findViewById(R.id.Bernadete);
         imgbtn_lobo = (ImageButton) findViewById(R.id.Lobo);
@@ -79,23 +125,6 @@ public class TelaTorneio extends AppCompatActivity
         imgbtn_lego =  (ImageButton) findViewById(R.id.Lego);
         imgbtn_sombra = (ImageButton) findViewById(R.id.Sombra);
         imgbtn_tonto = (ImageButton)  findViewById(R.id.Tonto);
-
-
-        //Creating Button
-        btn_ok = (Button) findViewById(R.id.goStrategy);
-
-        //Creating TextView to display robot name
-        tv_robot_name = (TextView) findViewById(robot_name);
-
-        //Creating spinner element and array adapter
-        sp_category = (Spinner) findViewById(R.id.sp_category);
-
-        //Creating Object of the FAB and FAB Menu classes and link to respectives XML ID's
-
-        fab_menu_robot_settings = (FloatingActionMenu) findViewById(R.id.fab_menu_robot_settings);
-        fab_button_robot_add = (FloatingActionButton) findViewById(R.id.item_add_robot);
-        fab_button_robot_update = (FloatingActionButton) findViewById(R.id.item_update_robot);
-        fab_button_robot_delete = (FloatingActionButton) findViewById(R.id.item_delete_robot);
 
         fab_button_robot_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,12 +154,14 @@ public class TelaTorneio extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which)
                     {
-                        /*
-                        TODO: Code below will depend on the robot database, that has not been created yet.
-                        String name = et_strategy_name.getText().toString();
-                        String character = et_character.getText().toString();
 
-                        Boolean result = db_my_strategies.insertData(name,character);
+                        //TODO: actually create the robots buttons
+                        Random r = new Random();
+                        int id = r.nextInt(1001-100)+100;
+                        String name = et_robot_name.getText().toString();
+                        String category = et_robot_category.getText().toString();
+
+                        Boolean result = dbr.addRobot(id, name, category);
                         if (result)
                         {
                             Toast.makeText(TelaTorneio.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
@@ -140,7 +171,7 @@ public class TelaTorneio extends AppCompatActivity
                         {
                             Toast.makeText(TelaTorneio.this, "Data Insertion Failed", Toast.LENGTH_SHORT).show();
                         }
-                        */
+
                         Toast.makeText(TelaTorneio.this, "Build robot database to use the 'add robot' functionality :)", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -170,13 +201,10 @@ public class TelaTorneio extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which)
                     {
-                        /*
-                        TODO: Code below will depend on the robot database, that has not been created yet.
-                        String id = et_strategy_id.getText().toString();
-                        String name = et_strategy_name.getText().toString();
-                        String character = et_character.getText().toString();
+                        String name = et_robot_name.getText().toString();
+                        String character = et_robot_category.getText().toString();
 
-                        Boolean result = db_my_strategies.updateData(name, character);
+                        Boolean result = dbr.updateRobot(Integer.parseInt(dbr.getCOL_1()), name, character);
                         if(result)
                         {
                             Toast.makeText(TelaTorneio.this, "Data Updated Successfully", Toast.LENGTH_SHORT).show();
@@ -186,7 +214,7 @@ public class TelaTorneio extends AppCompatActivity
                         {
                             Toast.makeText(TelaTorneio.this,"No Rows Affected", Toast.LENGTH_SHORT).show();
                         }
-                        */
+
                         Toast.makeText(TelaTorneio.this, "Build robot database to use the 'update robot' functionality :)", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -248,14 +276,6 @@ public class TelaTorneio extends AppCompatActivity
 
             }
         });
-
-
-
-        dataAdapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
-
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        sp_category.setAdapter(dataAdapter);
 
         sp_category.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
@@ -323,6 +343,10 @@ public class TelaTorneio extends AppCompatActivity
             }
 
         });
+    }
+
+    public void updateRobotList(String category){
+
     }
 
     public void showRobotName(View view)

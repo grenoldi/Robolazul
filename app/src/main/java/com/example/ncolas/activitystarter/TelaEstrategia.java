@@ -20,7 +20,7 @@ import static com.example.ncolas.activitystarter.R.id.strategy_name;
 
 
 public class TelaEstrategia extends AppCompatActivity {
-    CriaBanco db_my_strategies;
+    DBStrategies db_my_strategies;
     TextView tv_robot;
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
@@ -41,7 +41,7 @@ public class TelaEstrategia extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_estrategia);
 
-        db_my_strategies = new CriaBanco(this);
+        db_my_strategies = new DBStrategies(this);
 
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
         floatingActionButton1 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item1); //Add
@@ -80,8 +80,8 @@ public class TelaEstrategia extends AppCompatActivity {
                     {
                         String name = et_strategy_name.getText().toString();
                         String character = et_character.getText().toString();
-
-                        Boolean result = db_my_strategies.insertData(name,character);
+                        String rName = tv_robot.getText().toString();
+                        Boolean result = db_my_strategies.insertData(name,character, rName);
                         if (result)
                         {
                             Toast.makeText(TelaEstrategia.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
